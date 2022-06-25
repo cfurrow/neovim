@@ -1,3 +1,6 @@
+-- originally from: https://github.com/LunarVim/Neovim-from-scratch/blob/master/lua/user/plugins.lua
+-- some additions from: https://github.com/ChristianChiarulli/nvim/blob/master/lua/user/plugins.lua
+
 local fn = vim.fn
 
 -- Automatically install packer
