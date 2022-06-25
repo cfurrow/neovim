@@ -15,35 +15,13 @@ local check_backspace = function()
   return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
 end
 
---   פּ ﯟ   some other good icons
-local kind_icons = {
-  Text = "",
-  Method = "m",
-  Function = "",
-  Constructor = "",
-  Field = "",
-  Variable = "",
-  Class = "",
-  Interface = "",
-  Module = "",
-  Property = "",
-  Unit = "",
-  Value = "",
-  Enum = "",
-  Keyword = "",
-  Snippet = "",
-  Color = "",
-  File = "",
-  Reference = "",
-  Folder = "",
-  EnumMember = "",
-  Constant = "",
-  Struct = "",
-  Event = "",
-  Operator = "",
-  TypeParameter = "",
-}
--- find more here: https://www.nerdfonts.com/cheat-sheet
+local icons = require "user.icons"
+
+local kind_icons = icons.kind
+
+vim.api.nvim_set_hl(0, "CmpItemKindCopilot", {fg ="#6CC644"})
+vim.api.nvim_set_hl(0, "CmpItemKindTabnine", {fg ="#CA42F0"})
+vim.api.nvim_set_hl(0, "CmpItemKindEmoji", {fg ="#FDE030"})
 
 cmp.setup {
   snippet = {
@@ -51,13 +29,14 @@ cmp.setup {
       luasnip.lsp_expand(args.body) -- For `luasnip` users.
     end,
   },
-  mapping = {
+
+  mapping = cmp.mapping.preset.insert {
     ["<C-k>"] = cmp.mapping.select_prev_item(),
-		["<C-j>"] = cmp.mapping.select_next_item(),
+    ["<C-j>"] = cmp.mapping.select_next_item(),
     ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
     ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
     ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-    ["<C-y>"] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+    -- ["<C-y>"] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
     ["<C-e>"] = cmp.mapping {
       i = cmp.mapping.abort(),
       c = cmp.mapping.close(),
@@ -98,22 +77,43 @@ cmp.setup {
     fields = { "kind", "abbr", "menu" },
     format = function(entry, vim_item)
       -- Kind icons
-      vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
-      -- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
+      vim_item.kind = kind_icons[vim_item.kind]
+
+      if entry.source.name == "cmp_tabnine" then
+        vim_item.kind = icons.misc.Robot
+        vim_item.kind_hl_group = "CmpItemKindTabnine"
+      end
+      if entry.source.name == "copilot" then
+        vim_item.kind = icons.git.Octoface
+        vim_item.kind_hl_group = "CmpItemKindCopilot"
+      end
+
+      if entry.source.name == "emoji" then
+        vim_item.kind = icons.misc.Smiley
+        vim_item.kind_hl_group = "CmpItemKindEmoji"
+      end
+
+      -- NOTE: order matters
       vim_item.menu = ({
         nvim_lsp = "[LSP]",
-        luasnip = "[Snippet]",
+        nvim_lua = "",
+        luasnip = "",
         buffer = "[Buffer]",
         path = "[Path]",
+        emoji = "[Emoji]",
       })[entry.source.name]
       return vim_item
     end,
   },
   sources = {
+    { name = "copilot" },
     { name = "nvim_lsp" },
+    { name = "nvim_lua" },
     { name = "luasnip" },
     { name = "buffer" },
+    { name = "cmp_tabnine" },
     { name = "path" },
+    { name = "emoji" },
   },
   confirm_opts = {
     behavior = cmp.ConfirmBehavior.Replace,
@@ -121,11 +121,15 @@ cmp.setup {
   },
   window = {
     documentation = {
-      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      border = "rounded",
+      winhighlight = "NormalFloat:Pmenu,NormalFloat:Pmenu,CursorLine:PmenuSel,Search:None",
+    },
+    completion = {
+      border = "rounded",
+      winhighlight = "NormalFloat:Pmenu,NormalFloat:Pmenu,CursorLine:PmenuSel,Search:None",
     },
   },
   experimental = {
-    ghost_text = false,
-    native_menu = false,
+    ghost_text = true,
   },
 }
