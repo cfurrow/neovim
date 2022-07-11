@@ -19,7 +19,7 @@ local icons = require "user.icons"
 
 local kind_icons = icons.kind
 
-vim.api.nvim_set_hl(0, "CmpItemKindCopilot", {fg ="#6CC644"})
+--vim.api.nvim_set_hl(0, "CmpItemKindCopilot", {fg ="#6CC644"})
 vim.api.nvim_set_hl(0, "CmpItemKindTabnine", {fg ="#CA42F0"})
 vim.api.nvim_set_hl(0, "CmpItemKindEmoji", {fg ="#FDE030"})
 
@@ -29,7 +29,7 @@ cmp.setup {
       luasnip.lsp_expand(args.body) -- For `luasnip` users.
     end,
   },
-
+  
   mapping = cmp.mapping.preset.insert {
     ["<C-k>"] = cmp.mapping.select_prev_item(),
     ["<C-j>"] = cmp.mapping.select_next_item(),
@@ -83,10 +83,11 @@ cmp.setup {
         vim_item.kind = icons.misc.Robot
         vim_item.kind_hl_group = "CmpItemKindTabnine"
       end
-      if entry.source.name == "copilot" then
-        vim_item.kind = icons.git.Octoface
-        vim_item.kind_hl_group = "CmpItemKindCopilot"
-      end
+
+      -- if entry.source.name == "copilot" then
+      --   vim_item.kind = icons.git.Octoface
+      --   vim_item.kind_hl_group = "CmpItemKindCopilot"
+      -- end
 
       if entry.source.name == "emoji" then
         vim_item.kind = icons.misc.Smiley
@@ -106,14 +107,14 @@ cmp.setup {
     end,
   },
   sources = {
-    { name = "copilot" },
+    -- { name = "copilot" },
     { name = "nvim_lsp" },
     { name = "nvim_lua" },
     { name = "luasnip" },
     { name = "buffer" },
-    { name = "cmp_tabnine" },
+    --{ name = "cmp_tabnine" },
     { name = "path" },
-    { name = "emoji" },
+    --{ name = "emoji" },
   },
   confirm_opts = {
     behavior = cmp.ConfirmBehavior.Replace,
