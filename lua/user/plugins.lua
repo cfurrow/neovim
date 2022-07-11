@@ -94,20 +94,20 @@ return packer.startup(function(use)
     requires = "hrsh7th/nvim-cmp",
   }
 
-  --use "github/copilot.vim"
-  use {
-    "zbirenbaum/copilot.lua",
-    event = { "VimEnter" },
-    config = function()
-      vim.defer_fn(function()
-        require("user.copilot")
-      end, 100)
-    end,
-  }
-  use {
-    "zbirenbaum/copilot-cmp",
-    module = "copilot_cmp",
-  }
+  use "github/copilot.vim"
+  -- use {
+  --   "zbirenbaum/copilot.lua",
+  --   event = { "VimEnter" },
+  --   config = function()
+  --     vim.defer_fn(function()
+  --       require("user.copilot")
+  --     end, 100)
+  --   end,
+  -- }
+  -- use {
+  --   "zbirenbaum/copilot-cmp",
+  --   module = "copilot_cmp",
+  -- }
 
   -- snippets
   use "L3MON4D3/LuaSnip" --snippet engine
