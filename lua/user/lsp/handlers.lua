@@ -95,6 +95,9 @@ if not status_ok then
   return
 end
 
-M.capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+-- 2022-10-21 09:29 AM  this is now deprecated? fuck me
+-- use cmp_nvim_lsp.default_capabilities instead.
+-- M.capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+M.capabilities = cmp_nvim_lsp.default_capabilities
 
 return M
