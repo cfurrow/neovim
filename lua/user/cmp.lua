@@ -23,6 +23,36 @@ local kind_icons = icons.kind
 vim.api.nvim_set_hl(0, "CmpItemKindTabnine", {fg ="#CA42F0"})
 vim.api.nvim_set_hl(0, "CmpItemKindEmoji", {fg ="#FDE030"})
 
+-- TODO: make this a function in neovim that I can call to disable cmp in current buffer
+-- :lua require('cmp').setup.buffer { enabled = false }
+--vim.fn["DisableCmp"] = function()
+--  require("cmp").setup.buffer {enabled = false}
+--end
+function setAutoCmp(mode)
+  if mode then
+    cmp.setup({
+      completion = {
+        autocomplete = { require('cmp.types').cmp.TriggerEvent.TextChanged }
+      }
+    })
+  else
+    cmp.setup({
+      completion = {
+        autocomplete = false
+      }
+    })
+  end
+end
+setAutoCmp(false)
+
+-- enable automatic completion popup on typing
+vim.cmd('command AutoCmpOn lua setAutoCmp(true)')
+
+-- disable automatic competion popup on typing
+vim.cmd('command AutoCmpOff lua setAutoCmp(false)')
+
+
+
 cmp.setup {
   snippet = {
     expand = function(args)
