@@ -39,8 +39,10 @@ luac.out
 *.x86_64
 *.hex
 
+# Vim sessions
+Session.vim
+*.session
 
 plugin/packer_compiled.lua
-Session.vim
 luacache_chunks
 luacache_modpaths
