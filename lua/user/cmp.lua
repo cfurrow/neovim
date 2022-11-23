@@ -19,8 +19,8 @@ local icons = require "user.icons"
 
 local kind_icons = icons.kind
 
---vim.api.nvim_set_hl(0, "CmpItemKindCopilot", {fg ="#6CC644"})
-vim.api.nvim_set_hl(0, "CmpItemKindTabnine", {fg ="#CA42F0"})
+vim.api.nvim_set_hl(0, "CmpItemKindCopilot", {fg ="#6CC644"})
+-- vim.api.nvim_set_hl(0, "CmpItemKindTabnine", {fg ="#CA42F0"})
 vim.api.nvim_set_hl(0, "CmpItemKindEmoji", {fg ="#FDE030"})
 
 -- TODO: make this a function in neovim that I can call to disable cmp in current buffer
@@ -28,7 +28,7 @@ vim.api.nvim_set_hl(0, "CmpItemKindEmoji", {fg ="#FDE030"})
 --vim.fn["DisableCmp"] = function()
 --  require("cmp").setup.buffer {enabled = false}
 --end
-function setAutoCmp(mode)
+local function setAutoCmp(mode)
   if mode then
     cmp.setup({
       completion = {
@@ -59,7 +59,7 @@ cmp.setup {
       luasnip.lsp_expand(args.body) -- For `luasnip` users.
     end,
   },
-  
+
   mapping = cmp.mapping.preset.insert {
     ["<C-k>"] = cmp.mapping.select_prev_item(),
     ["<C-j>"] = cmp.mapping.select_next_item(),
@@ -75,12 +75,18 @@ cmp.setup {
     -- Set `select` to `false` to only confirm explicitly selected items.
     ["<CR>"] = cmp.mapping.confirm { select = true },
     ["<Tab>"] = cmp.mapping(function(fallback)
+      --[[ local copilot_keys = vim.fn['copilot#Accept']() ]]
+      --[[ print("copilot keys: " .. copilot_keys) ]]
+
       if cmp.visible() then
         cmp.select_next_item()
       elseif luasnip.expandable() then
         luasnip.expand()
       elseif luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
+      --[[ elseif copilot_keys ~= '' and type(copilot_keys) == 'string' then ]]
+      --[[   -- https://www.reddit.com/r/neovim/comments/sk70rk/comment/hxephoi/?utm_source=reddit&utm_medium=web2x&context=3 ]]
+      --[[   vim.api.nvim_feedkeys(copilot_keys, 'i', true) ]]
       elseif check_backspace() then
         fallback()
       else
@@ -109,15 +115,15 @@ cmp.setup {
       -- Kind icons
       vim_item.kind = kind_icons[vim_item.kind]
 
-      if entry.source.name == "cmp_tabnine" then
-        vim_item.kind = icons.misc.Robot
-        vim_item.kind_hl_group = "CmpItemKindTabnine"
-      end
+      --[[ if entry.source.name == "cmp_tabnine" then ]]
+      --[[   vim_item.kind = icons.misc.Robot ]]
+      --[[   vim_item.kind_hl_group = "CmpItemKindTabnine" ]]
+      --[[ end ]]
 
-      -- if entry.source.name == "copilot" then
-      --   vim_item.kind = icons.git.Octoface
-      --   vim_item.kind_hl_group = "CmpItemKindCopilot"
-      -- end
+      if entry.source.name == "copilot" then
+        vim_item.kind = icons.git.Octoface
+        vim_item.kind_hl_group = "CmpItemKindCopilot"
+      end
 
       if entry.source.name == "emoji" then
         vim_item.kind = icons.misc.Smiley
@@ -137,7 +143,7 @@ cmp.setup {
     end,
   },
   sources = {
-    -- { name = "copilot" },
+    { name = "copilot" },
     { name = "nvim_lsp" },
     { name = "nvim_lua" },
     { name = "luasnip" },
