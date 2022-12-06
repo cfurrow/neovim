@@ -39,6 +39,11 @@ keymap("n", "<S-h>", ":bprevious<CR>", opts)
 keymap("n", "<A-j>", "<Esc>:m .+1<CR>==gi", opts)
 keymap("n", "<A-k>", "<Esc>:m .-2<CR>==gi", opts)
 
+--Copy relative file path to clipboard--
+keymap("n", "<Leader>y", ":let @+ = expand('%')<CR>", opts)
+-- Use %:p if you want the absolute path
+--keymap("n", "<Leader>c", ":let @+=expand('%:p')", opts)
+
 -- Insert --
 -- Press jk fast to enter
 keymap("i", "jk", "<ESC>", opts)
