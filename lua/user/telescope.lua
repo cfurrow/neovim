@@ -6,6 +6,7 @@ end
 local actions = require "telescope.actions"
 
 telescope.setup {
+  file_ignore_patterns = { "vendor/*", "node_modules/*" },
   defaults = {
 
     prompt_prefix = " ",
