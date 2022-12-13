@@ -3,7 +3,7 @@ if not status_ok then
   return
 end
 
-require("persisted").setup({
+persisted.setup({
   use_git_branch = false, -- create session files based on the branch of the git enabled repository
   autosave = true, -- automatically save session files when exiting Neovim
 })
