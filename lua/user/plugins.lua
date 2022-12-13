@@ -137,15 +137,7 @@ return packer.startup(function(use)
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
 
   -- Session management
---   use({
---     "olimorris/persisted.nvim",
---     --module = "persisted", -- For lazy loading
---     config = function()
---       require("persisted").setup()
---       require("telescope").load_extension("persisted") -- To load the telescope extension
---     end,
---   })
-
+  use "olimorris/persisted.nvim"
 
   -- Treesitter
   use {
