@@ -67,7 +67,6 @@ return packer.startup(function(use)
   -- obsidian plugin recommends vim-markdown, tabular
   use 'epwalsh/obsidian.nvim'
 
-
   -- Colorschemes
   -- use "lunarvim/colorschemes" -- A bunch of colorschemes you can try out
   use "rktjmp/lush.nvim"

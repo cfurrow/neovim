@@ -42,6 +42,10 @@ for k, v in pairs(options) do
   vim.opt[k] = v
 end
 
+-- Disable stupid vim-markdown folding?
+-- https://github.com/preservim/vim-markdown
+vim.g.vim_markdown_folding_disabled = 1
+
 vim.cmd "set whichwrap+=<,>,[,],h,l"
 vim.cmd [[set iskeyword+=-]]
 vim.cmd [[set formatoptions-=cro]] -- TODO: this doesn't seem to work
