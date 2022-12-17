@@ -57,12 +57,13 @@ return packer.startup(function(use)
   use "akinsho/toggleterm.nvim"
   use "ahmedkhalf/project.nvim"
   use "lewis6991/impatient.nvim"
-  use "lukas-reineke/indent-blankline.nvim"
+  use "lukas-reineke/indent-blankline.nvim" -- add indentation guides, even on blank lines
   use "goolord/alpha-nvim"
   use "antoinemadec/FixCursorHold.nvim" -- This is needed to fix lsp doc highlight
   use "folke/which-key.nvim"
   use 'preservim/vim-markdown'
   use 'godlygeek/tabular'
+  use 'tpope/vim-sleuth' -- detect tabstop and shiftwidth automatically
 
   -- obsidian plugin recommends vim-markdown, tabular
   use 'epwalsh/obsidian.nvim'
@@ -71,7 +72,7 @@ return packer.startup(function(use)
   -- use "lunarvim/colorschemes" -- A bunch of colorschemes you can try out
   use "rktjmp/lush.nvim"
   use "lunarvim/darkplus.nvim"
-  use 'folke/tokyonight.nvim'
+  --use 'folke/tokyonight.nvim' -- it's had some issues updating. commenting out for now
   use "ellisonleao/gruvbox.nvim"
   use "davidscotson/sonokai-nvim"
   use 'nyoom-engineering/oxocarbon.nvim'
@@ -143,12 +144,17 @@ return packer.startup(function(use)
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
   }
+  use { -- Additional text objects via treesitter
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    after = 'nvim-treesitter',
+  }
   use "JoosepAlviste/nvim-ts-context-commentstring"
 
   -- Git
   use "lewis6991/gitsigns.nvim"
   use "kdheepak/lazygit.nvim"
   use "tpope/vim-fugitive"
+  use "tpope/vim-rhubarb" -- allow GBrowse to open github links in browser
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
